@@ -1,8 +1,7 @@
+#include <catch2/catch_test_macros.hpp>
 #include "../src/planning/astar.hpp"
-#include <cassert>
-#include <iostream>
 
-void test_astar_straight() {
+TEST_CASE("AStar straight path", "[astar]") {
     OccupancyGrid grid(5, 5, 1.0);
     AStarPlanner planner;
 
@@ -11,18 +10,17 @@ void test_astar_straight() {
 
     auto path = planner.plan(grid, start, goal);
 
-    assert(!path.empty());
-    assert(path.front().x == 0);
-    assert(path.front().y == 0);
-    assert(path.back().x == 4);
-    assert(path.back().y == 0);
+    REQUIRE(!path.empty());
+    REQUIRE(path.front().x == 0);
+    REQUIRE(path.front().y == 0);
+    REQUIRE(path.back().x == 4);
+    REQUIRE(path.back().y == 0);
 }
 
-void test_astar_obstacle() {
+TEST_CASE("AStar obstacle avoidance", "[astar]") {
     OccupancyGrid grid(5, 5, 1.0);
     AStarPlanner planner;
 
-    // Block middle
     grid.setOccupied(0, 2, true);
     grid.setOccupied(1, 2, true);
     grid.setOccupied(2, 2, true);
@@ -31,21 +29,19 @@ void test_astar_obstacle() {
     Vec2 goal{4, 0};
 
     auto path = planner.plan(grid, start, goal);
-    assert(!path.empty());
+    REQUIRE(!path.empty());
 
-    // Ensure path does not go through obstacles
     for (auto const& p : path) {
         int row = static_cast<int>(p.y);
         int col = static_cast<int>(p.x);
-        assert(!grid.isOccupied(row, col));
+        REQUIRE_FALSE(grid.isOccupied(row, col));
     }
 }
 
-void test_astar_no_path() {
+TEST_CASE("AStar no path", "[astar]") {
     OccupancyGrid grid(3, 3, 1.0);
     AStarPlanner planner;
 
-    // Block row 1
     for (int j = 0; j < 3; ++j) {
         grid.setOccupied(1, j, true);
     }
@@ -54,13 +50,5 @@ void test_astar_no_path() {
     Vec2 goal{2, 2};
 
     auto path = planner.plan(grid, start, goal);
-    assert(path.empty());
-}
-
-int main() {
-    test_astar_straight();
-    test_astar_obstacle();
-    test_astar_no_path();
-    std::cout << "\nAll astar tests passed.\n";
-    return 0;
+    REQUIRE(path.empty());
 }

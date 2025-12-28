@@ -1,12 +1,11 @@
-#include <cassert>
-#include <cmath>
-#include <iostream>
+#include <catch2/catch_test_macros.hpp>
 #include "../src/sim/robot_state.hpp"
 #include "../src/sim/motion_model.hpp"
 #include "../src/control/path_follower.hpp"
 #include "../src/util/math.hpp"
+#include <cmath>
 
-void test_closed_loop() {
+TEST_CASE("Closed loop path following", "[closed_loop]") {
     RobotState state;
     state.position = Vec2{0, 0};
     state.theta = 0;
@@ -24,13 +23,7 @@ void test_closed_loop() {
         model.step(state, vl, vr, dt);
     }
 
-    assert(state.position.distance(goal) < epsilon);
-    assert(std::abs(wrapToPi(state.theta)) < 0.1);
-
-    std::cout << "test_closed_loop OK\n";
+    REQUIRE(state.position.distance(goal) < epsilon);
+    REQUIRE(std::abs(wrapToPi(state.theta)) < 0.1);
 }
 
-int main() {
-    test_closed_loop();
-    std::cout << "Motion model and path follower tests passed.\n";
-}
