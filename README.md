@@ -1,3 +1,5 @@
+![CI](https://github.com/jcruden/cpp-2d-robot-sim/actions/workflows/ci.yml/badge.svg)
+
 # C++ 2D Robotics Simulator
 
 Modern C++ 2D mobile robot simulator built from first principles. Focus on clean architecture and code to demonstrate understanding of basic concepts.
