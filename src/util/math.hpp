@@ -11,6 +11,10 @@ struct Vec2 {
     // const because does not modify *this
     double norm() const noexcept {return std::hypot(x, y);};
 
+    double distance(const Vec2& o) const noexcept {
+        return std::sqrt((x - o.x) * (x - o.x) + (y - o.y) * (y - o.y));
+    };
+
     // take const& to avoid copies
     Vec2 operator+(const Vec2& o) const noexcept {
         return {x + o.x, y + o.y};
@@ -22,6 +26,10 @@ struct Vec2 {
 
     Vec2 operator*(double o) const noexcept {
         return {x * o, y * o};
+    }
+
+    Vec2& operator+=(const Vec2& o) noexcept {
+        x += o.x; y += o.y; return *this;
     }
 
 };
