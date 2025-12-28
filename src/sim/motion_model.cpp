@@ -6,10 +6,12 @@ MotionModel::MotionModel(double wheel_base) : wheel_base_(wheel_base) {}
 
 void MotionModel::step(
     RobotState& state,
+    double vl,
+    double vr,
     double dt
 ) const {
-    double v = (state.v_right + state.v_left) / 2;
-    double w = (state.v_right - state.v_left) / wheel_base_;
+    double v = (vl + vr) / 2;
+    double w = (vr - vl) / wheel_base_;
 
     // Euler integration
     state.position.x += v * std::cos(state.theta) * dt;
@@ -18,4 +20,6 @@ void MotionModel::step(
 
     // [-pi, pi]
     state.theta = wrapToPi(state.theta);
+    state.v_left = vl;
+    state.v_right = vr;
 };

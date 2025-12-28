@@ -13,7 +13,7 @@ void test_straight_line() {
     s.v_right = 1.0;         // m/s
 
     MotionModel model(0.5);   // wheel_base = 0.5 m
-    model.step(s, 1.0);       // dt = 1s
+    model.step(s, s.v_left, s.v_right, 1.0);       // dt = 1s
 
     // Expect x = 1.0, y = 0.0, theta unchanged
     assert(std::abs(s.position.x - 1.0) < 1e-6);
@@ -38,7 +38,7 @@ void test_rotate_in_place() {
 
     double L = 0.5;
     MotionModel model(L);
-    model.step(s, 1.0); // dt = 1s
+    model.step(s, s.v_left, s.v_right, 1.0); // dt = 1s
 
     double expected_omega = 2.0 / L;
     double expected_theta = expected_omega * 1.0;
@@ -60,7 +60,7 @@ void test_zero_velocity() {
     s.v_right = 0.0;
 
     MotionModel model(0.5);
-    model.step(s, 0.5);
+    model.step(s, s.v_left, s.v_right, 0.5);
 
     assert(std::abs(s.position.x - 0.5) < 1e-9);
     assert(std::abs(s.position.y - (-0.2)) < 1e-9);

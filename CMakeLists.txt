@@ -38,6 +38,17 @@ target_include_directories(occupancy_grid
         src
 )
 
+# Closed loop library
+add_library(closed_loop
+    src/control/path_follower.cpp
+    src/sim/motion_model.cpp
+)
+
+target_include_directories(closed_loop
+    PUBLIC
+        src
+)
+
 # AStar library
 add_library(astar
     src/planning/astar.cpp
@@ -86,4 +97,13 @@ add_executable(test_sensor
 
 target_link_libraries(test_sensor
     PRIVATE sensor occupancy_grid
+)
+
+# Closed loop tests
+add_executable(test_loop
+    tests/test_closed_loop.cpp
+)
+
+target_link_libraries(test_loop
+    PRIVATE closed_loop
 )

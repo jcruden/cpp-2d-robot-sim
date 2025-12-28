@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../sim/robot_state.hpp"
-#include "../sim/action.hpp"
 #include "../util/math.hpp"
 #include <vector>
 
