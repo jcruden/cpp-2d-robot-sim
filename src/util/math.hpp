@@ -33,3 +33,17 @@ struct Vec2 {
     }
 
 };
+
+inline double wrapToPi(double theta) noexcept {
+    constexpr double TWO_PI = 2.0 * M_PI;
+
+    if (theta > M_PI) {
+        return std::fmod(theta + M_PI, TWO_PI) - M_PI;
+    } 
+
+    if (theta <= -M_PI) {
+        return std::fmod(theta - M_PI, TWO_PI) + M_PI;
+    }
+    
+    return theta;
+}

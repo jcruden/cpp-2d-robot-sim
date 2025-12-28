@@ -1,4 +1,5 @@
 #include "motion_model.hpp"
+#include "../util/math.hpp"
 #include <cmath>
 
 MotionModel::MotionModel(double wheel_base) : wheel_base_(wheel_base) {}
@@ -16,10 +17,5 @@ void MotionModel::step(
     state.theta += w * dt;
 
     // [-pi, pi]
-    if (state.theta > M_PI) {
-        state.theta = std::fmod(state.theta + M_PI, 2.0*M_PI) - M_PI;
-    }
-    else if (state.theta <= -M_PI) {
-        state.theta = std::fmod(state.theta - M_PI, 2.0*M_PI) + M_PI;
-    }
+    state.theta = wrapToPi(state.theta);
 };
