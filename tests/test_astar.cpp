@@ -1,5 +1,6 @@
 #include "../src/planning/astar.hpp"
 #include <cassert>
+#include <iostream>
 
 void test_astar_straight() {
     OccupancyGrid grid(5, 5, 1.0);
