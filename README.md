@@ -20,8 +20,11 @@ Modern C++ 2D mobile robot simulator built from first principles. Focus on clean
 ### Differential-Drive Motion Model
 - Discrete time kinematic model
 
+### 2D Range Sensor
+- Grid based ray marching
+
 ### Unit Tests
-- Simple tests for path planner and motion
+- Simple tests for astar, grid, motion, sensor
 
 ## Build & Test
 ```bash
@@ -29,3 +32,6 @@ mkdir build && cd build
 cmake ..
 cmake --build .
 ./test_motion
+./test_sensor
+./test_grid
+./test_astar

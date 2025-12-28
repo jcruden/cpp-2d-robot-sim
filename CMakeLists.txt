@@ -18,6 +18,16 @@ target_include_directories(motion_model
         src
 )
 
+# Sensor library
+add_library(sensor
+    src/sim/sensor.cpp
+)
+
+target_include_directories(sensor
+    PUBLIC
+        src
+)
+
 # Occupancy grid library
 add_library(occupancy_grid
     src/sim/occupancy_grid.cpp
@@ -67,4 +77,13 @@ add_executable(test_astar
 
 target_link_libraries(test_astar
     PRIVATE astar occupancy_grid
+)
+
+# Sensor tests
+add_executable(test_sensor
+    tests/test_sensor.cpp
+)
+
+target_link_libraries(test_sensor
+    PRIVATE sensor occupancy_grid
 )

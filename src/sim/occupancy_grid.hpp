@@ -13,6 +13,8 @@ public:
 
     int width() const noexcept { return width_; };
     int height() const noexcept { return height_; };
+    double resolution() const noexcept { return resolution_; };
+    Vec2 origin() const noexcept { return origin_; };
     
     // conversions
     std::pair<int, int> worldToGrid(Vec2 const& p) const;
