@@ -55,3 +55,11 @@ void test_astar_no_path() {
     auto path = planner.plan(grid, start, goal);
     assert(path.empty());
 }
+
+int main() {
+    test_astar_straight();
+    test_astar_obstacle();
+    test_astar_no_path();
+    std::cout << "\nAll astar tests passed.\n";
+    return 0;
+}
