@@ -1,5 +1,6 @@
 #include "../src/sim/occupancy_grid.hpp"
 #include <cassert>
+#include <iostream>
 
 void test_grid() {
     OccupancyGrid grid(4, 3, 1.0);
@@ -13,4 +14,10 @@ void test_grid() {
             assert(j == jj);
         }
     }
+}
+
+int main() {
+    test_grid();
+    std::cout << "\nGrid tests passed.\n";
+    return 0;
 }
