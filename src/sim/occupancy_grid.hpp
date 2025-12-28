@@ -23,11 +23,11 @@ public:
     void addCircle(Vec2 center, double radius);
 
     void writeSVG(char const* filename) const;
-    
-private:
+
     int index(int i, int j) const noexcept;
     std::pair<int, int> coord(int ind) const;
-
+    
+private:
     int width_;
     int height_;
     double resolution_;
