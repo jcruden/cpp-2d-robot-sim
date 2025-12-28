@@ -36,6 +36,11 @@
 *.exe
 *.out
 *.app
+run_tests
+
+# Build directories
+build/
+cmake-build-*/
 
 # debug information files
 *.dwo

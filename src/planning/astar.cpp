@@ -3,6 +3,7 @@
 #include <cmath>
 #include <algorithm>
 #include <queue>
+#include <array>
 
 namespace {
     struct Node {
@@ -20,14 +21,53 @@ namespace {
     };
 
     using OpenSet = std::priority_queue<Node, std::vector<Node>, NodeCompare>;
-}
 
-static constexpr int di[4] = { -1, 1, 0, 0 };
-static constexpr int dj[4] = { 0, 0, -1, 1 };
+    // Direction offsets
+    constexpr std::array<int, 4> di = {-1, 1, 0, 0};
+    constexpr std::array<int, 4> dj = {0, 0, -1, 1};
 
-// manhattan distance for 4 connected graph
-static int heuristic(int i0, int j0, int i1, int j1) {
-    return std::abs(i0 - i1) + std::abs(j0 - j1);
+    // manhattan distance for 4 connected graph
+    int heuristic(int i0, int j0, int i1, int j1) {
+        return std::abs(i0 - i1) + std::abs(j0 - j1);
+    }
+
+    // Reconstruct path from goal to start using parent map
+    std::vector<Vec2> get_path(
+        Index goal_ind,
+        Index start_ind,
+        ParentMap const& parent,
+        OccupancyGrid const& grid)
+    {
+        std::vector<Vec2> path;
+
+        // Check if path exists
+        if (parent.find(goal_ind) == parent.end() && goal_ind != start_ind) {
+            return {};  // No path found
+        }
+
+        Index curr = goal_ind;
+        while (curr != start_ind) {
+            auto [i, j] = grid.coord(curr);
+            path.push_back(Vec2{
+                static_cast<double>(j),
+                static_cast<double>(i)
+            });
+            auto it = parent.find(curr);
+            if (it == parent.end()) {
+                return {};  // No path
+            }
+            curr = it->second;
+        }
+        // Add start node
+        auto [i, j] = grid.coord(start_ind);
+        path.push_back(Vec2{
+            static_cast<double>(j),
+            static_cast<double>(i)
+        });
+
+        std::reverse(path.begin(), path.end());
+        return path;
+    }
 }
 
 // i = y = row, j = x = col
@@ -49,11 +89,22 @@ std::vector<Vec2> AStarPlanner::plan(
     Index goal_ind = grid.index(goali, goalj);
     Index start_ind = grid.index(starti, startj);
 
+    // check start and goal not occupied
+    if (grid.isOccupied(goali, goalj) || grid.isOccupied(starti, startj)) {
+        return {};
+    }
+
+    // check if start == goal
+    if (start_ind == goal_ind) {
+        auto [i, j] = grid.coord(start_ind);
+        return {Vec2{static_cast<double>(j), static_cast<double>(i)}};
+    }
+
     // initialize first node
     int g = 0;
     int f = heuristic(starti, startj, goali, goalj);
     curr_cost[start_ind] = g;
-    Node start_node = {starti, startj, g, f};
+    Node start_node{starti, startj, g, f};
     open.push(start_node);
 
     // A star algorithm
@@ -92,27 +143,5 @@ std::vector<Vec2> AStarPlanner::plan(
         }
     }
 
-    std::vector<Vec2> path;
-
-    Index curr = goal_ind;
-    while (curr != start_ind) {
-        auto [i, j] = grid.coord(curr);
-        path.push_back(Vec2 {
-            static_cast<double>(j),
-            static_cast<double>(i)
-        });
-        if (parent.find(curr) == parent.end()) {
-            return {};
-        }
-        curr = parent[curr];
-    }
-    auto [i, j] = grid.coord(start_ind);
-    path.push_back(Vec2 {
-        static_cast<double>(j),
-        static_cast<double>(i)
-    });
-
-    std::reverse(path.begin(), path.end());
-
-    return path;
+    return get_path(goal_ind, start_ind, parent, grid);
 }
