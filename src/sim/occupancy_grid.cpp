@@ -2,7 +2,7 @@
 #include <cassert>
 #include <fstream>
 
-OccupancyGrid::OccupancyGrid(int width, int height, double resolution, Vec2 origin)
+OccupancyGrid::OccupancyGrid(int width, int height, double resolution, Vec2 const& origin)
     : width_(width),
     height_(height),
     resolution_(resolution),

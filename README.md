@@ -2,7 +2,7 @@
 
 # C++ 2D Robotics Simulator
 
-Modern C++ 2D mobile robot simulator built from first principles. Focus on clean architecture and code to demonstrate understanding of basic concepts.
+Lightweight modern C++ 2D mobile robot simulator built from first principles. Focus on clean architecture and code to demonstrate understanding of basic concepts. A* path planning, differential drive motion model, SVG visualization.
 
 ## Features
 
@@ -10,7 +10,7 @@ Modern C++ 2D mobile robot simulator built from first principles. Focus on clean
 - Vec2 type with norm, arithmetic, distance
 
 ### 2D Occupancy Grid
-- Row-major stoage
+- Row-major storage
 - World grid coord conversion
 - Obstacle generation
 
@@ -23,15 +23,42 @@ Modern C++ 2D mobile robot simulator built from first principles. Focus on clean
 ### 2D Range Sensor
 - Grid based ray marching
 
-### Unit Tests
-- Simple tests for astar, grid, motion, sensor
+### Simulation Loop
+- Integrates sensing, planning, control, motion
 
-## Build & Test
+### Visualization
+- SVG frame with obstacles, trajectory, robot pose/goal
+
+### Testing & CI
+- Unit tests for components
+- Built with CMake
+
+## Project Structure
+
+```
+cpp-2d-robot-sim/
+├── src/
+│   ├── control/          # Path following controller
+│   ├── planning/         # A* path planning
+│   ├── sim/              # Core simulation components (robot, sensor, motion model, grid)
+│   ├── util/             # Math utilities
+│   └── main.cpp          # Entry point
+├── tests/                # Unit tests
+├── examples/             # Example configurations and maps
+└── scripts/              # Utility scripts
+```
+
+## Requirements
+
+- C++17 compiler
+- CMake >= 3.14
+
+## Build
+
 ```bash
 mkdir build && cd build
 cmake ..
 cmake --build .
-./test_motion
-./test_sensor
-./test_grid
-./test_astar
+./sim
+./test_runner
+```

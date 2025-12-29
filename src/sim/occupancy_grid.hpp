@@ -6,7 +6,7 @@
 
 class OccupancyGrid {
 public:
-    OccupancyGrid(int width, int height, double resolution, Vec2 origin = {0.0, 0.0});
+    OccupancyGrid(int width, int height, double resolution, Vec2 const& origin = {0.0, 0.0});
 
     bool isOccupied(int i, int j) const;
     void setOccupied(int i, int j, bool occ = true);

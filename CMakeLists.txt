@@ -73,3 +73,16 @@ add_executable(test_runner
     tests/test_simulator.cpp
 )
 target_link_libraries(test_runner PRIVATE simulator Catch2::Catch2WithMain)
+
+add_executable(sim
+    src/main.cpp
+    src/sim/simulator.cpp
+    src/sim/robot.cpp
+    src/sim/motion_model.cpp
+    src/sim/occupancy_grid.cpp
+    src/planning/astar.cpp
+    src/sim/sensor.cpp
+    src/control/path_follower.cpp
+)
+
+target_include_directories(sim PRIVATE src)
