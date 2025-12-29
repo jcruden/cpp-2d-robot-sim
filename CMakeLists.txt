@@ -70,5 +70,6 @@ add_executable(test_runner
     tests/test_motion.cpp
     tests/test_sensor.cpp
     tests/test_closed_loop.cpp
+    tests/test_simulator.cpp
 )
 target_link_libraries(test_runner PRIVATE simulator Catch2::Catch2WithMain)

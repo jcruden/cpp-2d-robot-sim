@@ -11,10 +11,8 @@ TEST_CASE("AStar straight path", "[astar]") {
     auto path = planner.plan(grid, start, goal);
 
     REQUIRE(!path.empty());
-    REQUIRE(path.front().x == 0);
-    REQUIRE(path.front().y == 0);
-    REQUIRE(path.back().x == 4);
-    REQUIRE(path.back().y == 0);
+    REQUIRE(path.front().distance(Vec2{0.5, 0.5}) < 1e-6);
+    REQUIRE(path.back().distance(Vec2{4.5, 0.5}) < 1e-6);     
 }
 
 TEST_CASE("AStar obstacle avoidance", "[astar]") {

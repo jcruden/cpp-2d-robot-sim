@@ -48,10 +48,7 @@ namespace {
         Index curr = goal_ind;
         while (curr != start_ind) {
             auto [i, j] = grid.coord(curr);
-            path.push_back(Vec2{
-                static_cast<double>(j),
-                static_cast<double>(i)
-            });
+            path.push_back(grid.gridToWorld(i, j));
             auto it = parent.find(curr);
             if (it == parent.end()) {
                 return {};  // No path
@@ -60,10 +57,7 @@ namespace {
         }
         // Add start node
         auto [i, j] = grid.coord(start_ind);
-        path.push_back(Vec2{
-            static_cast<double>(j),
-            static_cast<double>(i)
-        });
+        path.push_back(grid.gridToWorld(i, j));
 
         std::reverse(path.begin(), path.end());
         return path;
