@@ -2,7 +2,7 @@
 
 # C++ 2D Robotics Simulator
 
-Lightweight modern C++ 2D mobile robot simulator built from first principles. Focus on clean architecture and code to demonstrate understanding of basic concepts. A* path planning, differential drive motion model, SVG visualization.
+Lightweight modern C++ 2D mobile robot simulator built from first principles. Focus on clean architecture and code to demonstrate understanding of basic concepts. A* path planning, differential drive motion model, SVG visualization
 
 ## Features
 
@@ -49,9 +49,8 @@ cpp-2d-robot-sim/
 ```
 
 ## Requirements
-
-- C++17 compiler
-- CMake >= 3.14
+- C++20 compiler
+- CMake >= 3.15
 
 ## Build
 
